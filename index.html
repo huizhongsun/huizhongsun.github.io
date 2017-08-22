@@ -23,7 +23,10 @@
 				overflow: hidden;
 				
 			}
-
+			embed {
+				margin: 0;
+				padding:0;
+			}
 
 			.sCenter {
 				position: absolute;
@@ -100,9 +103,13 @@
 			    animateDiv();
 			    
 			});*/
- var h = 0.5 * $(window).height();
- $("#sWindow1").attr("height", h);
- $("#sWindow2").attr("height", h);
+var h = 0.48 * $(window).height();
+var w = 0.48 * $(window).width();
+
+$("#sWindow1").attr("height", h);
+$("#sWindow1").attr("width", w);
+$("#sWindow2").attr("height", h);
+$("#sWindow2").attr("width", w);
 			
 			$("#s1").bind("click", function(){
 				$("#sWindow1").show();
@@ -181,10 +188,10 @@ function sDistance(element1,element2){
 			function makeNewPosition(){
 			    
 			    // Get viewport dimensions (remove the dimension of the div)
-			    var h = $(window).height() - 20;
+			    var h = 0.5*$(window).height() - 20;
 			    var w = $(window).width() - 100;
 			    
-			    var nh = Math.floor(Math.random() * h);
+			    var nh = 0.5*$(window).height()+Math.floor(Math.random() * h);
 			    var nw = Math.floor(Math.random() * w);
 			    
 			    return [nh,nw];    
