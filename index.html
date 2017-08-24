@@ -20,7 +20,8 @@
 			body {
 				font-family: "andaleMono";
 				background-color: #f0f0f0;
-				overflow: hidden;
+				overflow: auto;
+				overflow-x: hidden;
 				
 			}
 
@@ -28,9 +29,9 @@
 				position: absolute;
 				width: 100%;
 				top: 66%;
-				margin: 0px;
 				text-align: center;
 				font-size: 11px;
+
 			}
 			.sBlock {
 				display: none;
@@ -39,9 +40,16 @@
 				height: 20px;
 				top: 66%;
 				left: 50%;
-				margin: 0px;
+				font-size: 11px;				
+			}
+			.sB {
+				position: absolute;
 				font-size: 11px;
-				
+				z-index: -1;
+				top: 0;
+				left:0;	
+				width: 30%;
+
 			}
 			.sLink {
 				cursor:pointer;
@@ -50,61 +58,66 @@
 				opacity:0.5;
 			}
 
-			.sWin {
-				display: none;
-				width: 50%;
-				height: 50%;
-				margin: 0px;
-				padding: 0px;
+			
+			#sImg {
+				max-width: 100%;
+				height: auto;
 			}
-			#sWindow1 {
-				position: absolute;
-				top: 0%;
-				left: 0%;
-			}
-			#sWindow2 {
-				position: absolute;
-				top: 0%;
-				left: 50%;
-			}			
-				
 
 		</style>
 	</head>
 
 	<body>
-			<object id="sWindow1" class="sWin" data="tensor.html"></object>
-			<object id="sWindow2" class="sWin" data="tensor-image.html"></object>
 
+
+<!--
+		<object id="sWindow1" class="sWin" data="tensor.html"></object>
+		<object id="sWindow2" class="sWin" data="tensor-image.html"></object>
+-->
 	
+		<div class="sCenter">
+			2017: A<span id="space" class="sLink" onclick="sTop()" style="font-size:22px">&nbsp;Space&nbsp;</span>Odyssey
 
 
-
-		<p class="sCenter">
-			<span >2017: A</span><span id="space" class="sLink" onclick="sTop()" style="font-size:22px">&nbsp;Space&nbsp;</span><span>Odyssey</span>
-
-
-		</p>
-		<!--<div id="sAudio"><audio autoplay loop><source src="audio/Garden Highway-The Echelon Effect.mp3" type="audio/mpeg"></audio></div>-->
+		</div>
 
 		<div id="s1" class="sBlock">.data</div>
 		<div id="s2" class="sBlock">.text</div>
 		<div id="s3" class="sBlock">.image</div>
-		<div id="s4" class="sBlock">.architecture</div>
+		<div id="s4" class="sBlock">.math</div>
 		<div id="s5" class="sBlock">.philosophy</div>
 
-		
+
+		<div  class="sB">
+			<div id="sContainer"><img id="sImg" ></div>
+			<p id="sText"></p>
+			
+		</div>
 
 
-
-		<script>
+	<script>
 
 var myWindow;
 
 function openWin() {
     myWindow = window.open("", "", "width=250, height=250");
 }		
+			$("#s4").mouseenter(function(){
 
+
+				$("#sText").html("In mathematics, tensors are geometric objects that describe linear relations between geometric vectors, scalars, and other tensors. Elementary examples of such relations include the dot product, the cross product, and linear maps. Geometric vectors, often used in physics and engineering applications, and scalars themselves are also tensors.[1] A more sophisticated example is the Cauchy stress tensor T, which takes a direction v as input and produces the stress T(v) on the surface normal to this vector for output, thus expressing a relationship between these two vectors, shown in the figure (right). Given a reference basis of vectors, a tensor can be represented as an organized multidimensional array of numerical values. The order (also degree or rank) of a tensor is the dimensionality of the array needed to represent it, or equivalently, the number of indices needed to label a component of that array. For example, a linear map is represented by a matrix (a 2-dimensional array) in a basis, and therefore is a 2nd-order tensor. A vector is represented as a 1-dimensional array in a basis, and is a 1st-order tensor. Scalars are single numbers and are thus 0th-order tensors. The collection of tensors on a vector space forms a tensor algebra.");
+
+				$("#sImg").attr("src", "img/tensor.png");
+				$(".sB").show();
+
+			});
+			$("#s3").mouseenter(function(){
+
+				$("#sText").html('Optical spaces are mathematical coordinate systems that facilitate the modeling of optical systems as mathematical transformations. An optical space is a mathematical coordinate system such as a Cartesian coordinate system associated with a refractive index. The analysis of optical systems is greatly simplified by the use of optical spaces which enable designers to place the origin of a coordinate system at any of several convenient locations. In the design of optical systems two optical spaces, object space and image space, are always employed. Additional intermediate spaces are often used as well.<br>Optical spaces extend to infinity in all directions. The object space does not exist only on the "input" side of the system, nor the image space only on the "output" side. All optical spaces thus overlap completely. Typically, the origin and at least some of the coordinate axes of each space are different. It may not be possible to discern from an illustration to which space a point, ray, or plane belongs unless some convention is adopted. A common convention uses capital letters to label points and lower case letters to indicate distances. Unprimed letters indicate object space and primed letters image space. Intermediate spaces are indicated by additional primes. The same letter is used to indicate a conjugate relationship either between points or distances. The only exception is the use of F and F to indicate respectively object and image space focal points (which are not conjugate). The term "object point" does not necessarily refer to a point on a specific object but rather to a point in object space; similarly for "image point".');
+
+				$("#sImg").attr("src", "img/text.jpg");
+				$(".sB").show();
+			});			
 						
 			$("#s1").bind("click", function(){
 				$("#sWindow1").show();
@@ -122,12 +135,8 @@ function openWin() {
 									shake("#s2",10);
 								}, 50);
 						
-				$("#s3").click(function(){
+				$("#s5").click(function(){
 					clearInterval(sInterval);
-					$("#sWindow1").hide();
-					$("#sWindow2").hide();
-					$("#sWindow3").show();
-					$("#sWindow4").show();					
 				});
 			}); 
 
@@ -177,8 +186,8 @@ function openWin() {
 			    var nh = 0.5*$(window).height()+Math.floor(Math.random() * h);
 			    var nw = Math.floor(Math.random() * w);*/
 
-			    var h = 45+Math.floor(Math.random() * 50);
-			    var w = Math.floor(Math.random() * 95);
+			    var h = 10+Math.floor(Math.random() * 80);
+			    var w = 35+Math.floor(Math.random() * 55);
 
 			    var nh = h+"%";
 			    var nw = w+"%";
@@ -227,11 +236,13 @@ function openWin() {
 					animateDiv4();	
 					animateDiv5();						
 				}
+				else{
+					$(".sB").hide();
+				}
+
+				$(".sCenter").animate({ top: 0});
 			}
-
-
-
-
 		</script>
+		
 	</body>
 </html>
