@@ -25,12 +25,8 @@
 				
 			}
 
-			img {
-				max-width: 100%;
-				height: auto;								
-			}
 			img:hover{
-				opacity:0.8;
+				opacity:0.5;
 			}
 
 			.sCenter {
@@ -66,10 +62,11 @@
 				opacity:0.5;
 			}
 			
-			
-			#sTitle {
-				display: none;
+			.sImg {
+				max-width: 100%;
+				height: auto;
 			}
+
 
 		</style>
 	</head>
@@ -90,8 +87,9 @@
 		<div id="sNetwork" class="sBlock">.network</div>
 
 		<div  class="sB">
-			<div id="sContainer"></div>
+			<div id="sContainer"><img class="sImg" id="s01"></div>
 			<p id="sTitle"></p>
+			<p id="sText"></p>
 			
 		</div>
 
@@ -99,22 +97,67 @@
 
 var vMath=0, vImg=0;
 
-			var len = 8;
-			for(i=0; i<len; i++){
+			$("#tMath").mouseenter(function(){
 
-				$(".sBlock").eq(i).mouseenter(function(){
-					$("#sContainer").load("b.html");
-					$(".sB").show();
+				if(vMath==0){
 
-				});
-			}
+					$("#sText").html("image");
 
+					$(".sImg").attr("src", "img/tensor.png");
+					$("#sTitle").html("01.math");
+				}
+
+				else{
+					switch(vMath){
+						case 1 :
+						$(".sImg").attr("src", "img/01.jpg");
+						$("#sText").html("second example");
+						$("#sTitle").html("02.math");
+						break;
+						case 2 :
+						$(".sImg").attr("src", "img/02.jpg");
+						$("#sText").html("third example");
+						$("#sTitle").html("03.math");
+						break;
+					}
+
+				}
+										
+				$(".sB").show();
+
+			});
 
 			$("#sContainer").click(function(){
 
+				switch($("#sTitle").html("math"))
+				{
+					case "01.math" :
+						$(".sImg").attr("src", "img/01.jpg");
+						$("#sText").html("second example");
+						$("#sTitle").html("02.math");
+						vMath = 1;
+						break;
+					case "02.math" :
+						$(".sImg").attr("src", "img/02.jpg");
+						$("#sText").html("third example");
+						$("#sTitle").html("03.math");
+						vMath = 2;
+						break;
+
+				}
 			
 			});
 
+			$("#tText").mouseenter(function(){
+
+
+				$("#sText").html();
+
+				$(".sImg").attr("src", "img/text.jpg");
+				$("#sTitle").html("01.image");
+				$(".sB").show();
+
+			});		
 
 //	moving close trembling	
 
