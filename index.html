@@ -59,10 +59,11 @@
 			}
 
 			
-			#sImg {
+			.sImg {
 				max-width: 100%;
 				height: auto;
 			}
+
 
 		</style>
 	</head>
@@ -89,7 +90,8 @@
 
 
 		<div  class="sB">
-			<div id="sContainer"><img id="sImg" ></div>
+			<div id="sContainer"><img class="sImg" id="s01"></div>
+			<p id="sTitle"></p>
 			<p id="sText"></p>
 			
 		</div>
@@ -101,22 +103,71 @@ var myWindow;
 
 function openWin() {
     myWindow = window.open("", "", "width=250, height=250");
-}		
+}	
+
+
+var vMath=0, vImg=0;
+
 			$("#s4").mouseenter(function(){
 
+				if(vMath==0){
 
-				$("#sText").html("In mathematics, tensors are geometric objects that describe linear relations between geometric vectors, scalars, and other tensors. Elementary examples of such relations include the dot product, the cross product, and linear maps. Geometric vectors, often used in physics and engineering applications, and scalars themselves are also tensors.[1] A more sophisticated example is the Cauchy stress tensor T, which takes a direction v as input and produces the stress T(v) on the surface normal to this vector for output, thus expressing a relationship between these two vectors, shown in the figure (right). Given a reference basis of vectors, a tensor can be represented as an organized multidimensional array of numerical values. The order (also degree or rank) of a tensor is the dimensionality of the array needed to represent it, or equivalently, the number of indices needed to label a component of that array. For example, a linear map is represented by a matrix (a 2-dimensional array) in a basis, and therefore is a 2nd-order tensor. A vector is represented as a 1-dimensional array in a basis, and is a 1st-order tensor. Scalars are single numbers and are thus 0th-order tensors. The collection of tensors on a vector space forms a tensor algebra.");
+					$("#sText").html("In mathematics, tensors are geometric objects that describe linear relations between geometric vectors, scalars, and other tensors. Elementary examples of such relations include the dot product, the cross product, and linear maps. Geometric vectors, often used in physics and engineering applications, and scalars themselves are also tensors.[1] A more sophisticated example is the Cauchy stress tensor T, which takes a direction v as input and produces the stress T(v) on the surface normal to this vector for output, thus expressing a relationship between these two vectors, shown in the figure (right). Given a reference basis of vectors, a tensor can be represented as an organized multidimensional array of numerical values. The order (also degree or rank) of a tensor is the dimensionality of the array needed to represent it, or equivalently, the number of indices needed to label a component of that array. For example, a linear map is represented by a matrix (a 2-dimensional array) in a basis, and therefore is a 2nd-order tensor. A vector is represented as a 1-dimensional array in a basis, and is a 1st-order tensor. Scalars are single numbers and are thus 0th-order tensors. The collection of tensors on a vector space forms a tensor algebra.");
 
-				$("#sImg").attr("src", "img/tensor.png");
+					$(".sImg").attr("src", "img/tensor.png");
+					$("#sTitle").html("01.math");
+				}
+
+				else{
+					switch(vMath){
+						case 1 :
+						$(".sImg").attr("src", "space/image/1.jpg");
+						$("#sText").html("second example");
+						$("#sTitle").html("02.math");
+						break;
+						case 2 :
+						$(".sImg").attr("src", "space/image/2.jpg");
+						$("#sText").html("third example");
+						$("#sTitle").html("03.math");
+						break;
+					}
+
+				}
+										
 				$(".sB").show();
 
 			});
+
+			$("#sContainer").click(function(){
+
+				switch($("#sTitle").html())
+				{
+					case "01.math" :
+						$(".sImg").attr("src", "space/image/1.jpg");
+						$("#sText").html("second example");
+						$("#sTitle").html("02.math");
+						vMath = 1;
+						break;
+					case "02.math" :
+						$(".sImg").attr("src", "space/image/2.jpg");
+						$("#sText").html("third example");
+						$("#sTitle").html("03.math");
+						vMath = 2;
+						break;
+
+				}
+			
+			});
+
 			$("#s3").mouseenter(function(){
+
 
 				$("#sText").html('Optical spaces are mathematical coordinate systems that facilitate the modeling of optical systems as mathematical transformations. An optical space is a mathematical coordinate system such as a Cartesian coordinate system associated with a refractive index. The analysis of optical systems is greatly simplified by the use of optical spaces which enable designers to place the origin of a coordinate system at any of several convenient locations. In the design of optical systems two optical spaces, object space and image space, are always employed. Additional intermediate spaces are often used as well.<br>Optical spaces extend to infinity in all directions. The object space does not exist only on the "input" side of the system, nor the image space only on the "output" side. All optical spaces thus overlap completely. Typically, the origin and at least some of the coordinate axes of each space are different. It may not be possible to discern from an illustration to which space a point, ray, or plane belongs unless some convention is adopted. A common convention uses capital letters to label points and lower case letters to indicate distances. Unprimed letters indicate object space and primed letters image space. Intermediate spaces are indicated by additional primes. The same letter is used to indicate a conjugate relationship either between points or distances. The only exception is the use of F and F to indicate respectively object and image space focal points (which are not conjugate). The term "object point" does not necessarily refer to a point on a specific object but rather to a point in object space; similarly for "image point".');
 
-				$("#sImg").attr("src", "img/text.jpg");
+				$(".sImg").attr("src", "img/text.jpg");
+				$("#sTitle").html("01.image");
 				$(".sB").show();
+
 			});			
 						
 			$("#s1").bind("click", function(){
