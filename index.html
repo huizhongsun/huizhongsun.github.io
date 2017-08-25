@@ -90,29 +90,62 @@
 		<div id="sNetwork" class="sBlock">.network</div>
 
 		<div  class="sB">
-			<div id="sContainer"></div>
+			<div id="sContainer">
+
+			</div>
 			<p id="sTitle"></p>
 			
 		</div>
 
 		<script>
 
-var vMath=0, vImg=0;
+var vData=0, vText=0; 
+var cData=3, cText=1;
 
-			var len = 8;
-			for(i=0; i<len; i++){
+			$("#tData").mouseenter(function(){
+				$("#sContainer").empty();
+				$("#sTitle").html("Data");
+				var nD=vData.toString();
+				$("#sContainer").load("d"+nD+".html");					
+			});
 
-				$(".sBlock").eq(i).mouseenter(function(){
-					$("#sContainer").load("b.html");
-					$(".sB").show();
-
-				});
-			}
-
+			$("#tText").mouseenter(function(){
+				$("#sContainer").empty();
+				$("#sTitle").html("Text");					
+				var nT=vText.toString();
+				$("#sContainer").load("t"+nT+".html");
+			});
 
 			$("#sContainer").click(function(){
+				$("#sContainer").empty();
+				switch($("#sTitle").html()){
 
-			
+					case "Data":
+						if(vData<cData){
+							vData++;
+							var nD=vData.toString();
+							$("#sContainer").load("d"+nD+".html");
+							$("#sTitle").html("Data");							
+						}else{
+							var nD=cData.toString();
+							$("#sContainer").load("d"+nD+".html");	
+							$("#sTitle").html("Data");						
+						}
+						break;
+
+					case "Text":
+						if(vText<cText){
+							vText++;
+							var nT=vText.toString();
+							$("#sContainer").load("t"+nT+".html");
+							$("#sTitle").html("Text");					
+						}else{
+							var nT=cText.toString();
+							$("#sContainer").load("t"+nT+".html");	
+							$("#sTitle").html("Data");						
+						}	
+						break;										
+				}			
 			});
 
 
