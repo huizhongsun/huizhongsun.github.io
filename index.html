@@ -126,6 +126,7 @@ var cData=3, cText=1;
 			$("#tData").mouseenter(function(){
 				$("#sContainer").empty();
 				$("#sTitle").html("Data");
+				$("#sTag").html("");
 				var nD=vData.toString();
 				$("#sContainer").load("d"+nD+".html");	
 				$(".sB").show();				
@@ -166,7 +167,7 @@ var cData=3, cText=1;
 						}else{
 							var nT=cText.toString();
 							$("#sContainer").load("t"+nT+".html");	
-							$("#sTitle").html("Data");						
+							$("#sTitle").html("Text");						
 						}	
 						break;										
 				}			
