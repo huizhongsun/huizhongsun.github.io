@@ -44,12 +44,13 @@
 			.sBlock {
 				display: none;
 				position: absolute;
-				width: 100px;
-				height: 20px;
+				width: 3%;
 				top: 66%;
 				left: 50%;
-				font-size: 11px;				
+				font-size: 11px;
+		
 			}
+
 			.sB {
 				position: absolute;
 				font-size: 11px;
@@ -57,6 +58,7 @@
 				top: 0;
 				left:0;	
 				width: 30%;
+				text-align: justify;
 
 			}
 			.sLink {
@@ -70,6 +72,12 @@
 			#sTitle {
 				display: none;
 			}
+			#sIndex {
+				text-align: right;
+			}
+
+
+
 
 		</style>
 	</head>
@@ -80,7 +88,9 @@
 			2017: A<span id="space" class="sLink" onclick="sTop()" style="font-size:22px">&nbsp;Space&nbsp;</span>Odyssey
 		</div>
 
-		<div id="tData" class="sBlock">.data</div>
+		<div id="tData" class="sBlock">.data
+
+		</div>
 		<div id="tText" class="sBlock">.text</div>
 		<div id="tImage" class="sBlock">.image</div>
 		<div id="tMath" class="sBlock">.math</div>
@@ -89,15 +99,26 @@
 		<div id="sDevice" class="sBlock">.device</div>
 		<div id="sNetwork" class="sBlock">.network</div>
 
-		<div  class="sB">
-			<div id="sContainer">
-
-			</div>
+		<div  class="sB">			
+			<div id="sContainer"></div>
 			<p id="sTitle"></p>
-			
+			<p id="sTag"></p>
+			<p id="sIndex"><span><<</span>&nbsp;&nbsp;&nbsp;<span>>></span></p>			
 		</div>
 
+<div style="display:none;">
+	<img class="sSvg" src="img/a30.svg">
+	<div id="rData">
+		<span>[building]</span>
+		<span>[network]</span>
+		<span>[image]</span>
+		<span>[text]</span>
+	</div>
+</div>
+
 		<script>
+
+
 
 var vData=0, vText=0; 
 var cData=3, cText=1;
@@ -106,14 +127,17 @@ var cData=3, cText=1;
 				$("#sContainer").empty();
 				$("#sTitle").html("Data");
 				var nD=vData.toString();
-				$("#sContainer").load("d"+nD+".html");					
+				$("#sContainer").load("d"+nD+".html");	
+				$(".sB").show();				
 			});
 
 			$("#tText").mouseenter(function(){
 				$("#sContainer").empty();
-				$("#sTitle").html("Text");					
+				$("#sTitle").html("Text");	
+				$("#sTag").html("<data><image>");				
 				var nT=vText.toString();
 				$("#sContainer").load("t"+nT+".html");
+				$(".sB").show();
 			});
 
 			$("#sContainer").click(function(){
@@ -153,10 +177,17 @@ var cData=3, cText=1;
 
 			$("#tPhilosophy").bind("mouseover", function(){
 				sPosition = $(this).position();
+
 				var range = 0;
 				while(range > -10 && range < 10){
 					range =20 - Math.floor(Math.random() * 40);
 				}
+				
+				var nTop=(sPosition.top+range)/$(window).height()*100;
+				var nLeft=(sPosition.left+range)/$(window).width()*100;
+				var nP=makePosition(nTop,nLeft);
+				$("#tBuilding").animate({top: nP[0], left: nP[1]},3000);				
+/*				
 				$("#tBuilding").animate({top: sPosition.top+range, left: sPosition.left+range},5000);
 
 				var sInterval = setInterval(function(){
@@ -167,6 +198,7 @@ var cData=3, cText=1;
 				$("#tImage").click(function(){
 					clearInterval(sInterval);
 				});
+*/				
 			}); 
 
 			function shake(element, coefficient){
@@ -200,19 +232,19 @@ var cData=3, cText=1;
 			    var nh = 0.5*$(window).height()+Math.floor(Math.random() * h);
 			    var nw = Math.floor(Math.random() * w);
 */
-			    var h = 10+Math.floor(Math.random() * 80);
+			    var h = 10+Math.floor(Math.random() * 60);
 			    var w = 35+Math.floor(Math.random() * 55);
-			    var nh = h+"%";
-			    var nw = w+"%";			    
+			    var nh = String(h)+"%";
+			    var nw = String(w)+"%";			    
 			    return [nh,nw];    			    
 			}
-/*
+
 			function makePosition(h, w){
-			    var nh = h+"%";
-			    var nw = w+"%";			    
+			    var nh = String(h)+"%";
+			    var nw = String(w)+"%";			    
 			    return [nh,nw];    			    
 			}			
-
+/*
 			function animateDiv(element){
 			    var newq = makeNewPosition();
 			    $(element).animate({top: newq[0], left: newq[1]});		    
@@ -224,7 +256,17 @@ var cData=3, cText=1;
 			function sTop() {
 
 				if($(".sBlock").css("display")=="none"){
-
+					$(".sBlock").prepend($(".sSvg"));
+					$("#tBuilding .sSvg").animate(
+						{
+							padding: 2
+						},
+					    {
+					    step: function(now,fx) {
+					      $(this).css('transform','scale('+now+')');  
+					    },
+					    duration:'slow'
+					});
 					$(".sBlock").show();	
 
 					var len = 8;
