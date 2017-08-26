@@ -29,9 +29,6 @@
 				max-width: 100%;
 				height: auto;								
 			}
-			img:hover{
-				opacity:0.8;
-			}
 
 			.sCenter {
 				position: absolute;
@@ -61,10 +58,10 @@
 				text-align: justify;
 
 			}
-			.sLink {
+			span {
 				cursor:pointer;
 			}			
-			.sLink:hover {
+			span:hover {
 				opacity:0.5;
 			}
 			
@@ -72,11 +69,6 @@
 			#sTitle {
 				display: none;
 			}
-			#sIndex {
-				text-align: right;
-			}
-
-
 
 
 		</style>
@@ -99,47 +91,128 @@
 		<div id="sDevice" class="sBlock">.device</div>
 		<div id="sNetwork" class="sBlock">.network</div>
 
-		<div  class="sB">			
+		<div  class="sB">	
 			<div id="sContainer"></div>
 			<p id="sTitle"></p>
-			<p id="sTag"></p>
-			<p id="sIndex"><span><<</span>&nbsp;&nbsp;&nbsp;<span>>></span></p>			
+			<p id="sTag"></p>		
+
 		</div>
 
 <div style="display:none;">
 	<img class="sSvg" src="img/a30.svg">
-	<div id="rData">
+
+	<div class="rData" class="sR">
 		<span>[building]</span>
 		<span>[network]</span>
 		<span>[image]</span>
 		<span>[text]</span>
+		<div style="float: right">
+			<span class="lIndex" > << </span>&nbsp;&nbsp;&nbsp;<span class="rIndex"> >> </span>
+		</div>
 	</div>
+
+	<div class="rText" class="sR">
+		<span>[image]</span>
+		<span>[data]</span>
+		<div style="float: right">
+			<span class="lIndex" > << </span>&nbsp;&nbsp;&nbsp;<span class="rIndex"> >> </span>
+		</div>
+	</div>
+
 </div>
 
 		<script>
 
 
 
-var vData=0, vText=0; 
-var cData=3, cText=1;
+var vD=0, vT=0; 
+var cD=3, cT=1;
+
+			sMove("#tText","#tIndexR","#tIndexL",vT,cT,"t");
+			sMove("#tData","#dIndexR","#dIndexL",vD,cD,"d");
+			
+function sMove(b,r,l,v,c,t){
+
+	$(b).mouseenter(function(){
+		$("#sContainer").empty();
+		var n=v.toString();
+		$("#sContainer").load(t+n+".html");	
+		$(".sB").show();				
+	});		
+
+	$("#sContainer").delegate(r, "click", function(){
+		$("#sContainer").empty();
+		if(v<c){
+			v++;
+			var n=v.toString();
+			$("#sContainer").load(t+n+".html");
+		}else{
+			var n=c.toString();
+			$("#sContainer").load(t+n+".html");	
+		}			
+	});
+
+	$("#sContainer").delegate(l, "click", function(){
+		$("#sContainer").empty();
+		if(v>0){
+			v--;
+			var n=v.toString();
+			$("#sContainer").load(t+n+".html");
+		}else{
+			var n=String(0);
+			$("#sContainer").load(t+n+".html");	
+		}			
+	});
+}
+
+
+/*
+
 
 			$("#tData").mouseenter(function(){
 				$("#sContainer").empty();
-				$("#sTitle").html("Data");
-				$("#sTag").html("");
-				var nD=vData.toString();
+				var nD=vD.toString();
 				$("#sContainer").load("d"+nD+".html");	
 				$(".sB").show();				
 			});
 
+
 			$("#tText").mouseenter(function(){
-				$("#sContainer").empty();
-				$("#sTitle").html("Text");	
-				$("#sTag").html("<data><image>");				
-				var nT=vText.toString();
+				$("#sContainer").empty();				
+				var nT=vT.toString();
 				$("#sContainer").load("t"+nT+".html");
 				$(".sB").show();
 			});
+
+			$("#sContainer").delegate("#dB", "click", function(){
+				$("#sContainer").empty();
+				if(vData<cData){
+					vData++;
+					var nD=vData.toString();
+					$("#sContainer").load("d"+nD+".html");
+					$("#sTitle").html("Data");							
+				}else{
+					var nD=cData.toString();
+					$("#sContainer").load("d"+nD+".html");	
+					$("#sTitle").html("Data");						
+				}				
+
+			});
+
+			$(".rData .lIndex").click(function(){
+				$("#sContainer").empty();
+				if(vData>0){
+					vData--;
+					var nD=vData.toString();
+					$("#sContainer").load("d"+nD+".html");
+					$("#sTitle").html("Data");							
+				}else{
+					var nD=String(0);
+					$("#sContainer").load("d"+nD+".html");	
+					$("#sTitle").html("Data");						
+				}				
+
+			});			
 
 			$("#sContainer").click(function(){
 				$("#sContainer").empty();
@@ -172,7 +245,7 @@ var cData=3, cText=1;
 						break;										
 				}			
 			});
-
+*/
 
 //	moving close trembling	
 
