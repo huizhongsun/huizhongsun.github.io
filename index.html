@@ -58,11 +58,23 @@
 				text-align: justify;
 
 			}
-			
+			.sMedia {
+				display: none;
+				position: absolute;
+				top: 66%;
+				left: 50%;
+				font-size: 11px;	
+			}
 			.sSvg {
 				width: 50%;
 				height: auto;
 			}
+
+			.rSvg {
+				width: 50%;
+				height: auto;
+
+			}			
 
 			#space {
 				font-size: 22px;
@@ -90,6 +102,10 @@
 		<div id="tBuilding" class="sBlock">.building&nbsp;&nbsp;</div>
 		<div id="sDevice" class="sBlock">.device&nbsp;&nbsp;&nbsp;&nbsp;</div>
 		<div id="sNetwork" class="sBlock">.network&nbsp;&nbsp;&nbsp;</div>
+
+		<div id="rDT" class="sMedia">&nbsp;&nbsp;&nbsp;x&nbsp;&nbsp;&nbsp;</div>	
+
+
 <!-- 
 	content
 -->	
@@ -100,7 +116,10 @@
 	add on
 -->	
 <div style="display:none;">
+	
 	<div class="sSvg"><img src="img/a30.svg"></div>
+	<div class="rSvg"><img src="img/a30.svg"></div>
+
 
 </div>
 
@@ -108,8 +127,8 @@
 		<script>
 
 //	overall
-			var vD=0, vT=0; 
-			var cD=3, cT=1;
+			var z=0; 
+			var cD=3, cT=1, cDT=1;
 //	init
 			$("#space").click(function(){
 
@@ -132,24 +151,55 @@
 			});
 //	click and enlarge
 
-			sMove("#tData","#dIndexR","#dIndexL",vD,cD,"d");
-			sMove("#tText","#tIndexR","#tIndexL",vT,cT,"t");			
-			sCloser("#dT", "#tData", "#tText");
+			sMove("#tData","#dIndexR","#dIndexL",z,cD,"d");
+			sMove("#tText","#tIndexR","#tIndexL",z,cT,"t");	
 
 
 
+			$("#sContainer").on("click", "#dT", function(){
 
-function sMove(b,r,l,v,c,t){
+				$("#rDT").prepend($(".rSvg"));
+				$("#rDT").show();
+				sInbetween("#tData","#tText","#rDT");
+		
+			});
+
+function sInbetween(a,b,m){
+	var pA=$(a).position();
+	var pB=$(b).position();
+	var t=pB.top+(pA.top-pB.top)*0.5;
+	var l=pB.left+(pA.left-pB.left)*0.5;
+	var nP=makePosition(t,l);
+	$(m).animate({top: nP[0], left: nP[1]},3000);
+
+
+}
+			
+function sCloser(x,a,b){
+	$("#sContainer").on("click", x, function(){
+		sPosition = $(a).position();
+		var range = 0;
+		while(range > -10 && range < 10){
+			range =20 - Math.floor(Math.random() * 40);
+		}			
+		var nTop=sPosition.top+range;
+		var nLeft=sPosition.left+range;
+		var nP=makePosition(nTop,nLeft);
+		$(b).animate({top: nP[0], left: nP[1]},3000);			
+	});
+}
+
+function sMove(o,r,l,v,c,t){
 
 	var sCount=0;
-	$(b).mouseenter(function(){
+	$(o).mouseenter(function(){
 		$("#sContainer").empty();
 		var n=v.toString();
 		$("#sContainer").load(t+n+".html");	
 		$(".sB").show();
 	});		
 
-	$("#sContainer").delegate(r, "click", function(){
+	$("#sContainer").on("click", r, function(){
 		$("#sContainer").empty();
 		if(v<c){
 			v++;
@@ -161,11 +211,11 @@ function sMove(b,r,l,v,c,t){
 		}
 		sCount++;
 		if(sCount<16){
-			sBigger(b);	
+			sBigger(o);	
 		}	
 	});
 
-	$("#sContainer").delegate(l, "click", function(){
+	$("#sContainer").on("click", l, function(){
 
 		$("#sContainer").empty();
 		if(v>0){
@@ -178,7 +228,7 @@ function sMove(b,r,l,v,c,t){
 		}
 		sCount++;
 		if(sCount<16){
-			sBigger(b);	
+			sBigger(o);	
 		}
 			
 	});
@@ -194,20 +244,14 @@ function sBigger(b){
 
 }
 
-function sCloser(x,a,b){
-	$("#sContainer").delegate(x, "click", function(){
-		sPosition = $(a).position();
-		var range = 0;
-		while(range > -10 && range < 10){
-			range =20 - Math.floor(Math.random() * 40);
-		}			
-		var nTop=(sPosition.top+range)/$(window).height()*100;
-		var nLeft=(sPosition.left+range)/$(window).width()*100;
-		var nP=makePosition(nTop,nLeft);
-		$(b).animate({top: nP[0], left: nP[1]},3000);			
-	});
-}
+
 /*
+
+
+
+
+
+
 //	moving close trembling	
 
 			$("#tPhilosophy").bind("mouseover", function(){
@@ -236,8 +280,10 @@ function makeNewPosition(){
 }
 
 function makePosition(h, w){
-    var nh = String(h)+"%";
-    var nw = String(w)+"%";			    
+	var nT =h/$(window).height()*100;
+	var nL =w/$(window).width()*100;
+    var nh = String(nT)+"%";
+    var nw = String(nL)+"%";			    
     return [nh,nw];    			    
 }			
 
