@@ -25,8 +25,9 @@
 				height: auto;
 			}
 
-			span {
+			span {				
 				cursor:pointer;
+				z-index: 99;
 			}			
 			span:hover {
 				opacity:0.5;
@@ -40,45 +41,53 @@
 				font-size: 11px;
 
 			}
-			.sBlock {
-				display: none;
-				position: absolute;
-				top: 66%;
-				left: 50%;
-				font-size: 11px;		
-			}
-
 			.sB {
 				position: absolute;
 				font-size: 11px;
-				z-index: -1;
 				top: 0;
 				left:0;	
 				width: 30%;
 				text-align: justify;
 
 			}
-			.sMedia {
+
+			.sBlock {
 				display: none;
-				position: absolute;
+				position: fixed;
+				width: 6%;
 				top: 66%;
 				left: 50%;
-				font-size: 11px;	
+				font-size: 11px;
+				cursor:pointer;
+			}
+			.sMedia {
+				display: none;
+				position: fixed;
+				width: 3%;
+				top: 66%;
+				left: 50%;
+				font-size: 11px;
+				cursor:pointer;
+
 			}
 			.sSvg {
+				opacity: 0.99;
 				width: 50%;
 				height: auto;
 			}
 
 			.rSvg {
+				opacity: 0.99;				
 				width: 50%;
 				height: auto;
-
-			}			
-
+			}
+		
 			#space {
 				font-size: 22px;
 			}
+
+
+				
 
 
 		</style>
@@ -94,16 +103,16 @@
 <!-- 
 	type
 -->	
-		<div id="tData" class="sBlock">.data&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
-		<div id="tText" class="sBlock">.text&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
-		<div id="tImage" class="sBlock">.image&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
-		<div id="tMath" class="sBlock">.math&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
-		<div id="tPhilosophy" class="sBlock">.philosophy</div>
-		<div id="tBuilding" class="sBlock">.building&nbsp;&nbsp;</div>
-		<div id="sDevice" class="sBlock">.device&nbsp;&nbsp;&nbsp;&nbsp;</div>
-		<div id="sNetwork" class="sBlock">.network&nbsp;&nbsp;&nbsp;</div>
+		<div id="tData" class="sBlock"><span >.data</span></div>
+		<div id="tText" class="sBlock"><span >.text</span></div>
+		<div id="tImage" class="sBlock"><span >.image</span></div>
+		<div id="tMath" class="sBlock"><span >.math</span></div>
+		<div id="tPhilosophy" class="sBlock"><span >.philosophy</span></div>
+		<div id="tBuilding" class="sBlock"><span >.building</span></div>
+		<div id="sDevice" class="sBlock"><span >.device</span></div>
+		<div id="sNetwork" class="sBlock"><span >.network</span></div>
 
-		<div id="rDT" class="sMedia">&nbsp;&nbsp;&nbsp;x&nbsp;&nbsp;&nbsp;</div>	
+		<div id="rDT" class="sMedia"><span>x</span></div>
 
 
 <!-- 
@@ -117,8 +126,8 @@
 -->	
 <div style="display:none;">
 	
-	<div class="sSvg"><img src="img/a30.svg"></div>
-	<div class="rSvg"><img src="img/a30.svg"></div>
+	<div class="sSvg"><img  src="img/a30.svg"></div>
+	<div class="rSvg"><img  src="img/a30.svg"></div>
 
 
 </div>
@@ -133,7 +142,8 @@
 			$("#space").click(function(){
 
 				if($(".sBlock").css("display")=="none"){
-					$(".sBlock").prepend($(".sSvg"));				
+					$(".sBlock").prepend($(".sSvg"));
+
 					$(".sBlock").show();	
 //	booming		
 					var len = 8;
@@ -153,9 +163,10 @@
 
 			sMove("#tData", ".dIndexR", ".dIndexL", z, cD, "d");
 			sMove("#tText", ".tIndexR", ".tIndexL", z, cT, "t");	
-			sRelate(".dT", "#tData", "#tText", "#rDT", ".dtIndexR", ".dtIndexL", z, cDT, "dt");
+			sRelate(".dT", "#tText", "#tData", "#rDT", ".dtIndexR", ".dtIndexL", z, cDT, "dt");
 
 function sRelate(tag,a,b,m,r,l,v,c,t){
+
 	$("#sContainer").on("click", tag, function(){
 
 		if($(m).css("display")=="none"){
@@ -178,7 +189,7 @@ function sRelate(tag,a,b,m,r,l,v,c,t){
 			$(".sB").show();
 		});	
 
-		$("#sContainer").on("click", r, function(){
+		$("#sContainer").delegate(r, "click", function(){
 			$("#sContainer").empty();
 			if(v<c){
 				v++;
@@ -188,15 +199,15 @@ function sRelate(tag,a,b,m,r,l,v,c,t){
 				var n=c.toString();
 				$("#sContainer").load(t+n+".html");	
 			}
-			sCount++;
-			if(sCount<16){
+//			sCount++;
+//			if(sCount<16){
 //				sBigger(m);	
-			}	
+//			}	
 			sNear(a,b);		
 			sInbetween(a,b,m);
 		});
 
-		$("#sContainer").on("click", l, function(){
+		$("#sContainer").delegate(l, "click", function(){
 
 			$("#sContainer").empty();
 			if(v>0){
@@ -207,14 +218,13 @@ function sRelate(tag,a,b,m,r,l,v,c,t){
 				var n=String(0);
 				$("#sContainer").load(t+n+".html");	
 			}
-			sCount++;
-			if(sCount<16){
+//			sCount++;
+//			if(sCount<16){
 //				sBigger(m);	
-			}	
+//			}	
 			sNear(a,b);		
 			sInbetween(a,b,m);
 		});			
-
 
 		sInbetween(a,b,m);
 	});
@@ -226,24 +236,40 @@ function sRelate(tag,a,b,m,r,l,v,c,t){
 function sInbetween(a,b,m){
 	var pA=$(a).position();
 	var pB=$(b).position();
-	var t=pB.top+(pA.top-pB.top)*0.5;
-	var l=pB.left+(pA.left-pB.left)*0.5;
+	var t=pB.top+(pA.top-pB.top)*0.6;
+	var l=pB.left+(pA.left-pB.left)*0.6;
 	var nP=makePosition(t,l);
 	$(m).animate({top: nP[0], left: nP[1]},3000);
+
 
 }
 
 function sNear(a,b){
 	var pA=$(a).position();
 	var pB=$(b).position();
-	var t=pB.top+(pA.top-pB.top)*0.1;
-	var l=pB.left+(pA.left-pB.left)*0.1;
-	var nP=makePosition(t,l);
-	$(b).animate({top: nP[0], left: nP[1]},3000);
+	var t=pB.top+(pA.top-pB.top)*0.3;
+	var l=pB.left+(pA.left-pB.left)*0.3;
+	var dW=Math.abs(pA.left-pB.left);
+	if (dW>10) {
+		var nP=makePosition(t,l);
+		$(b).animate({
+			top: nP[0], 
+			left: nP[1]
+		},3000);		
+
+	}
+}
+
+
+			
+function sBigger(b){
+	$(b).animate(
+		{
+			height:"+=16px",
+			width:"+=16px"
+		},1000);
 
 }
-			
-
 
 function sMove(o,r,l,v,c,t){
 
@@ -255,7 +281,7 @@ function sMove(o,r,l,v,c,t){
 		$(".sB").show();
 	});		
 
-	$("#sContainer").on("click", r, function(){
+	$("#sContainer").delegate(r, "click",function(){
 		$("#sContainer").empty();
 		if(v<c){
 			v++;
@@ -271,7 +297,7 @@ function sMove(o,r,l,v,c,t){
 		}	
 	});
 
-	$("#sContainer").on("click", l, function(){
+	$("#sContainer").delegate(l, "click", function(){
 
 		$("#sContainer").empty();
 		if(v>0){
@@ -290,32 +316,10 @@ function sMove(o,r,l,v,c,t){
 	
 }
 
-function sBigger(b){
-	$(b).animate(
-		{
-			height:"+=16px",
-			width:"+=16px",
-		});
 
-}
 
 
 /*
-
-function sCloser(x,a,b){
-	$("#sContainer").on("click", x, function(){
-		sPosition = $(a).position();
-		var range = 0;
-		while(range > -10 && range < 10){
-			range =20 - Math.floor(Math.random() * 40);
-		}			
-		var nTop=sPosition.top+range;
-		var nLeft=sPosition.left+range;
-		var nP=makePosition(nTop,nLeft);
-		$(b).animate({top: nP[0], left: nP[1]},3000);			
-	});
-}
-
 
 
 
