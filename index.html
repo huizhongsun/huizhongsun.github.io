@@ -73,11 +73,15 @@
 	</head>
 
 	<body>
-	
+<!-- 
+	title
+-->	
 		<div class="sCenter">
-			2017: A<span id="space" onclick="sTop()">&nbsp;Space&nbsp;</span>Odyssey
+			2017: A<span id="space">&nbsp;Space&nbsp;</span>Odyssey
 		</div>
-
+<!-- 
+	type
+-->	
 		<div id="tData" class="sBlock">.data&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
 		<div id="tText" class="sBlock">.text&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
 		<div id="tImage" class="sBlock">.image&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
@@ -86,28 +90,55 @@
 		<div id="tBuilding" class="sBlock">.building&nbsp;&nbsp;</div>
 		<div id="sDevice" class="sBlock">.device&nbsp;&nbsp;&nbsp;&nbsp;</div>
 		<div id="sNetwork" class="sBlock">.network&nbsp;&nbsp;&nbsp;</div>
-
+<!-- 
+	content
+-->	
 		<div  class="sB">	
-			<div id="sContainer"></div>
-			<p id="sTag"></p>		
-
+			<div id="sContainer"></div>	
 		</div>
-
+<!-- 
+	add on
+-->	
 <div style="display:none;">
 	<div class="sSvg"><img src="img/a30.svg"></div>
 
 </div>
 
+
 		<script>
 
+//	overall
+			var vD=0, vT=0; 
+			var cD=3, cT=1;
+//	init
+			$("#space").click(function(){
 
+				if($(".sBlock").css("display")=="none"){
+					$(".sBlock").prepend($(".sSvg"));				
+					$(".sBlock").show();	
+//	booming		
+					var len = 8;
+					for(i=0; i<len; i++){
+						var newq = makeNewPosition();
+						$(".sBlock").eq(i).animate({top: newq[0], left: newq[1]},1000);	
+					}				
+				}
+				else{
+					$(".sB").hide();
+				}
 
-var vD=0, vT=0; 
-var cD=3, cT=1;
+				$(".sCenter").animate({ top: 0},1000);
 
-			sMove("#tText","#tIndexR","#tIndexL",vT,cT,"t");
+			});
+//	click and enlarge
+
 			sMove("#tData","#dIndexR","#dIndexL",vD,cD,"d");
-			
+			sMove("#tText","#tIndexR","#tIndexL",vT,cT,"t");			
+			sCloser("#dT", "#tData", "#tText");
+
+
+
+
 function sMove(b,r,l,v,c,t){
 
 	var sCount=0;
@@ -163,90 +194,22 @@ function sBigger(b){
 
 }
 
-
+function sCloser(x,a,b){
+	$("#sContainer").delegate(x, "click", function(){
+		sPosition = $(a).position();
+		var range = 0;
+		while(range > -10 && range < 10){
+			range =20 - Math.floor(Math.random() * 40);
+		}			
+		var nTop=(sPosition.top+range)/$(window).height()*100;
+		var nLeft=(sPosition.left+range)/$(window).width()*100;
+		var nP=makePosition(nTop,nLeft);
+		$(b).animate({top: nP[0], left: nP[1]},3000);			
+	});
+}
 /*
-
-
-			$("#tData").mouseenter(function(){
-				$("#sContainer").empty();
-				var nD=vD.toString();
-				$("#sContainer").load("d"+nD+".html");	
-				$(".sB").show();				
-			});
-
-
-			$("#tText").mouseenter(function(){
-				$("#sContainer").empty();				
-				var nT=vT.toString();
-				$("#sContainer").load("t"+nT+".html");
-				$(".sB").show();
-			});
-
-			$("#sContainer").delegate("#dB", "click", function(){
-				$("#sContainer").empty();
-				if(vData<cData){
-					vData++;
-					var nD=vData.toString();
-					$("#sContainer").load("d"+nD+".html");
-					$("#sTitle").html("Data");							
-				}else{
-					var nD=cData.toString();
-					$("#sContainer").load("d"+nD+".html");	
-					$("#sTitle").html("Data");						
-				}				
-
-			});
-
-			$(".rData .lIndex").click(function(){
-				$("#sContainer").empty();
-				if(vData>0){
-					vData--;
-					var nD=vData.toString();
-					$("#sContainer").load("d"+nD+".html");
-					$("#sTitle").html("Data");							
-				}else{
-					var nD=String(0);
-					$("#sContainer").load("d"+nD+".html");	
-					$("#sTitle").html("Data");						
-				}				
-
-			});			
-
-			$("#sContainer").click(function(){
-				$("#sContainer").empty();
-				switch($("#sTitle").html()){
-
-					case "Data":
-						if(vData<cData){
-							vData++;
-							var nD=vData.toString();
-							$("#sContainer").load("d"+nD+".html");
-							$("#sTitle").html("Data");							
-						}else{
-							var nD=cData.toString();
-							$("#sContainer").load("d"+nD+".html");	
-							$("#sTitle").html("Data");						
-						}
-						break;
-
-					case "Text":
-						if(vText<cText){
-							vText++;
-							var nT=vText.toString();
-							$("#sContainer").load("t"+nT+".html");
-							$("#sTitle").html("Text");					
-						}else{
-							var nT=cText.toString();
-							$("#sContainer").load("t"+nT+".html");	
-							$("#sTitle").html("Text");						
-						}	
-						break;										
-				}			
-			});
-*/
-
 //	moving close trembling	
-/*
+
 			$("#tPhilosophy").bind("mouseover", function(){
 				sPosition = $(this).position();
 
@@ -258,107 +221,27 @@ function sBigger(b){
 				var nTop=(sPosition.top+range)/$(window).height()*100;
 				var nLeft=(sPosition.left+range)/$(window).width()*100;
 				var nP=makePosition(nTop,nLeft);
-				$("#tBuilding").animate({top: nP[0], left: nP[1]},3000);
-
-
-	
-				var sInterval = setInterval(function(){
-									shake("#tPhilosophy", 10);
-									shake("#tBuilding",10);
-								}, 50);
-						
-				$("#tImage").click(function(){
-					clearInterval(sInterval);
-				});				
-			
-				$("#tBuilding").animate({top: sPosition.top+range, left: sPosition.left+range},5000);
+				$("#tBuilding").animate({top: nP[0], left: nP[1]},3000);			
 
 				
 			}); 
 */
 
-			function shake(element, coefficient){
+function makeNewPosition(){			    
+    var h = 10+Math.floor(Math.random() * 60);
+    var w = 35+Math.floor(Math.random() * 55);
+    var nh = String(h)+"%";
+    var nw = String(w)+"%";			    
+    return [nh,nw];    			    
+}
 
-			    $(element).css({"transition": "0.1s"});			
-		    
-	    		var randomInt1 = Math.floor((Math.random() * 3) + 1);
-		        var randomInt2 = Math.floor((Math.random() * 3) + 1);
-		        var randomInt3 = Math.floor((Math.random() * 2) + 1);
-		        
-		        var phase1 = (randomInt1 % 2) == 0 ? "+" : "-";
-		        var phase2 = (randomInt2 % 2) == 0 ? "+" : "-";
-		        var phase3 = (randomInt3 % 2) == 0 ? "+" : "-";
-		        
-		        var transitionX = ((phase1 + randomInt1) * (coefficient / 10)) + "px";
-		        var transitionY = ((phase2 + randomInt2) * (coefficient / 10)) + "px";
-		        var rotate = ((phase3 + randomInt3) * (coefficient / 10)) + "deg";
-		               
-		        $(element).css({"-webkit-transform": "translate("+transitionX+","+transitionY+") rotate("+rotate+")"});  
-			    
-			}
+function makePosition(h, w){
+    var nh = String(h)+"%";
+    var nw = String(w)+"%";			    
+    return [nh,nw];    			    
+}			
 
-//	booming
 
-			function makeNewPosition(){			    
-			    // Get viewport dimensions (remove the dimension of the div)
-/*			    
-			    var h = 0.5*$(window).height() - 20;
-			    var w = $(window).width() - 100;
-			    
-			    var nh = 0.5*$(window).height()+Math.floor(Math.random() * h);
-			    var nw = Math.floor(Math.random() * w);
-*/
-			    var h = 10+Math.floor(Math.random() * 60);
-			    var w = 35+Math.floor(Math.random() * 55);
-			    var nh = String(h)+"%";
-			    var nw = String(w)+"%";			    
-			    return [nh,nw];    			    
-			}
-
-			function makePosition(h, w){
-			    var nh = String(h)+"%";
-			    var nw = String(w)+"%";			    
-			    return [nh,nw];    			    
-			}			
-/*
-			function animateDiv(element){
-			    var newq = makeNewPosition();
-			    $(element).animate({top: newq[0], left: newq[1]});		    
-			};
-*/
-
-//	init
-
-			function sTop() {
-
-				if($(".sBlock").css("display")=="none"){
-					$(".sBlock").prepend($(".sSvg"));
-/*
-					$("#tBuilding .sSvg").animate(
-						{
-							padding: 2
-						},
-					    {
-					    step: function(now,fx) {
-					      $(this).css('transform','scale('+now+')');  
-					    },
-					    duration:'slow'
-					});
-*/					
-					$(".sBlock").show();	
-					
-					var len = 8;
-					for(i=0; i<len; i++){
-						var newq = makeNewPosition();
-						$(".sBlock").eq(i).animate({top: newq[0], left: newq[1]},1000);	
-					}				
-				}
-				else{
-					$(".sB").hide();
-				}
-
-				$(".sCenter").animate({ top: 0},1000);
-			}
 
 //	End		
 
