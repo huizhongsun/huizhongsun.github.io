@@ -17,6 +17,8 @@
 				background-color: #f0f0f0;
 				overflow: auto;
 				overflow-x: hidden;
+				margin: 0px;
+				padding: 0px;
 				
 			}
 
@@ -30,11 +32,11 @@
 				z-index: 99;
 			}			
 			span:hover {
-				opacity:0.5;
+				color: blue;
 			}
 
 			.sCenter {
-				position: absolute;
+				position: fixed;
 				width: 100%;
 				top: 66%;
 				text-align: center;
@@ -60,6 +62,9 @@
 				font-size: 11px;
 				cursor:pointer;
 			}
+			.sBlock:hover{
+				color: blue;
+			}
 			.sMedia {
 				display: none;
 				position: fixed;
@@ -68,16 +73,16 @@
 				left: 50%;
 				font-size: 11px;
 				cursor:pointer;
-
 			}
+			.sMedia:hover{
+				color: blue;
+			}			
 			.sSvg {
-				opacity: 0.99;
 				width: 50%;
 				height: auto;
 			}
 
 			.rSvg {
-				opacity: 0.99;				
 				width: 50%;
 				height: auto;
 			}
@@ -109,10 +114,18 @@
 		<div id="tMath" class="sBlock"><span >.math</span></div>
 		<div id="tPhilosophy" class="sBlock"><span >.philosophy</span></div>
 		<div id="tBuilding" class="sBlock"><span >.building</span></div>
-		<div id="sDevice" class="sBlock"><span >.device</span></div>
-		<div id="sNetwork" class="sBlock"><span >.network</span></div>
+		<div id="tApp" class="sBlock"><span >.app</span></div>
+		<div id="tNetwork" class="sBlock"><span >.network</span></div>
 
 		<div id="rDT" class="sMedia"><span>x</span></div>
+		<div id="rMB" class="sMedia"><span>x</span></div>
+		<div id="rMP" class="sMedia"><span>x</span></div>
+		<div id="rMI" class="sMedia"><span>x</span></div>
+		<div id="rPI" class="sMedia"><span>x</span></div>
+		<div id="rPN" class="sMedia"><span>x</span></div>
+		<div id="rPB" class="sMedia"><span>x</span></div>
+
+
 
 
 <!-- 
@@ -126,9 +139,15 @@
 -->	
 <div style="display:none;">
 	
-	<div class="sSvg"><img  src="img/a30.svg"></div>
-	<div class="rSvg"><img  src="img/a30.svg"></div>
+	<div class="sSvg"><img  src="img/a30b.svg"></div>
 
+	<div id="xDT" class="rSvg"><img  src="img/a45.svg"></div>
+	<div id="xMB" class="rSvg"><img  src="img/a45.svg"></div>
+	<div id="xMP" class="rSvg"><img  src="img/a45.svg"></div>
+	<div id="xMI" class="rSvg"><img  src="img/a45.svg"></div>
+	<div id="xPI" class="rSvg"><img  src="img/a45.svg"></div>
+	<div id="xPN" class="rSvg"><img  src="img/a45.svg"></div>
+	<div id="xPB" class="rSvg"><img  src="img/a45.svg"></div>
 
 </div>
 
@@ -136,8 +155,7 @@
 		<script>
 
 //	overall
-			var z=0; 
-			var cD=3, cT=1, cDT=1;
+			var cD=3, cT=1, cI=8, cM=6, cP=3, cDT=1, cMB=1, cMP=2, cMI=5, cPI=0, cPN=0, cPB=2;
 //	init
 			$("#space").click(function(){
 
@@ -153,7 +171,7 @@
 					}				
 				}
 				else{
-					$(".sB").hide();
+					$(".sB").toggle();
 				}
 
 				$(".sCenter").animate({ top: 0},1000);
@@ -161,21 +179,38 @@
 			});
 //	click and enlarge
 
-			sMove("#tData", ".dIndexR", ".dIndexL", z, cD, "d");
-			sMove("#tText", ".tIndexR", ".tIndexL", z, cT, "t");	
-			sRelate(".dT", "#tText", "#tData", "#rDT", ".dtIndexR", ".dtIndexL", z, cDT, "dt");
+			sMove("#tData", ".dIndexR", ".dIndexL", cD, "d");
+			sMove("#tText", ".tIndexR", ".tIndexL", cT, "t");
+			sMove("#tImage", ".iIndexR", ".iIndexL", cI, "i");	
+			sMove("#tMath", ".mIndexR", ".mIndexL", cM, "m");
+			sMove("#tPhilosophy", ".pIndexR", ".pIndexL", cP, "p");
 
-function sRelate(tag,a,b,m,r,l,v,c,t){
+			sRelate(".dT", "#tText", "#tData", "#rDT", ".dtIndexR", ".dtIndexL", cDT, "dt","#xDT");
 
+			sRelate(".mB", "#tBuilding", "#tMath", "#rMB", ".mbIndexR", ".mbIndexL", cMB, "mb","#xMB");
+
+			sRelate(".mP", "#tPhilosophy", "#tMath", "#rMP", ".mpIndexR", ".mpIndexL", cMP, "mp","#xMP");
+			sRelate(".pM", "#tMath", "#tPhilosophy", "#rMP", ".mpIndexR", ".mpIndexL", cMP, "mp","#xMP");	
+
+			sRelate(".mI", "#tImage", "#tMath", "#rMI", ".miIndexR", ".miIndexL", cMI, "mi","#xMI");
+
+			sRelate(".pI", "#tImage", "#tPhilosophy", "#rPI", ".piIndexR", ".piIndexL", cPI, "pi","#xPI");			
+
+			sRelate(".pN", "#tNetwork", "#tPhilosophy", "#rPN", ".pnIndexR", ".pnIndexL", cPN, "pn","#xPN");
+
+			sRelate(".pB", "#tBuilding", "#tPhilosophy", "#rPB", ".pbIndexR", ".pbIndexL", cPB, "pb","#xPB");
+
+
+function sRelate(tag,a,b,m,r,l,c,t,x){
+	
 	$("#sContainer").on("click", tag, function(){
-
+		var v=0;
 		if($(m).css("display")=="none"){
-			$(m).prepend($(".rSvg"));
+			$(m).prepend($(x));
 			$(m).show();
-			sMove(m, r, l, v, c, t);	
+//			sMove(m, r, l, v, c, t);	
 		
-		}
-
+		}	
 		var sCount=0;
 		$("#sContainer").empty();
 		var n=v.toString();
@@ -199,10 +234,10 @@ function sRelate(tag,a,b,m,r,l,v,c,t){
 				var n=c.toString();
 				$("#sContainer").load(t+n+".html");	
 			}
-//			sCount++;
-//			if(sCount<16){
-//				sBigger(m);	
-//			}	
+			sCount++;
+			if(sCount<8){
+				sBigger(m);	
+			}	
 			sNear(a,b);		
 			sInbetween(a,b,m);
 		});
@@ -218,10 +253,10 @@ function sRelate(tag,a,b,m,r,l,v,c,t){
 				var n=String(0);
 				$("#sContainer").load(t+n+".html");	
 			}
-//			sCount++;
-//			if(sCount<16){
-//				sBigger(m);	
-//			}	
+			sCount++;
+			if(sCount<8){
+				sBigger(m);	
+			}	
 			sNear(a,b);		
 			sInbetween(a,b,m);
 		});			
@@ -229,6 +264,7 @@ function sRelate(tag,a,b,m,r,l,v,c,t){
 		sInbetween(a,b,m);
 	});
 
+//	return v;
 }
 
 
@@ -247,10 +283,12 @@ function sInbetween(a,b,m){
 function sNear(a,b){
 	var pA=$(a).position();
 	var pB=$(b).position();
-	var t=pB.top+(pA.top-pB.top)*0.3;
-	var l=pB.left+(pA.left-pB.left)*0.3;
-	var dW=Math.abs(pA.left-pB.left);
-	if (dW>10) {
+	var dH=pA.top-pB.top;
+	var dW=pA.left-pB.left;
+	var t=pB.top+dH*0.3;
+	var l=pB.left+dW*0.3;	
+	var d=Math.sqrt(dH*dH+dW*dW);
+	if (d>200) {
 		var nP=makePosition(t,l);
 		$(b).animate({
 			top: nP[0], 
@@ -265,15 +303,16 @@ function sNear(a,b){
 function sBigger(b){
 	$(b).animate(
 		{
-			height:"+=16px",
-			width:"+=16px"
+			height:"+=10px",
+			width:"+=10px"
 		},1000);
 
 }
 
-function sMove(o,r,l,v,c,t){
+function sMove(o,r,l,c,t){
 
 	var sCount=0;
+	var v=0;
 	$(o).on("click",function(){
 		$("#sContainer").empty();
 		var n=v.toString();
