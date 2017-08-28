@@ -127,6 +127,10 @@
 		<div id="rBT" class="sMedia"><span>x</span></div>
 		<div id="rBA" class="sMedia"><span>x</span></div>
 		<div id="rBN" class="sMedia"><span>x</span></div>
+		<div id="rNA" class="sMedia"><span>x</span></div>
+		<div id="rAI" class="sMedia"><span>x</span></div>
+		<div id="rID" class="sMedia"><span>x</span></div>
+		<div id="rIT" class="sMedia"><span>x</span></div>
 
 
 
@@ -156,6 +160,10 @@
 	<div id="xBT" class="rSvg"><img  src="img/a45.svg"></div>
 	<div id="xBA" class="rSvg"><img  src="img/a45.svg"></div>
 	<div id="xBN" class="rSvg"><img  src="img/a45.svg"></div>
+	<div id="xNA" class="rSvg"><img  src="img/a45.svg"></div>
+	<div id="xAI" class="rSvg"><img  src="img/a45.svg"></div>
+	<div id="xID" class="rSvg"><img  src="img/a45.svg"></div>
+	<div id="xIT" class="rSvg"><img  src="img/a45.svg"></div>
 
 </div>
 
@@ -163,9 +171,9 @@
 		<script>
 
 //	overall
-			var cD=3, cT=1, cI=8, cM=6, cP=3, cB=5, cDT=1, cMB=1, 
+			var cD=3, cT=1, cI=8, cM=6, cP=3, cB=5, cN=3, cA=2, cDT=1, cMB=1, 
 			cMP=2, cMI=5, cPI=0, cPN=0, cPB=2, cBI=4, cBD=1, cBT=1, 
-			cBA=5, cBN=2;
+			cBA=5, cBN=2, cNA=2, cAI=2, cID=4, cIT=6;
 //	init
 			$("#space").click(function(){
 
@@ -178,13 +186,19 @@
 					for(i=0; i<len; i++){
 						var newq = makeNewPosition();
 						$(".sBlock").eq(i).animate({top: newq[0], left: newq[1]},1000);	
-					}				
+					}
+					$(".sCenter").animate({ top: 0},1000);				
 				}
 				else{
-					$(".sB").toggle();
+//					$(".sB").toggle();
+					var len = 8;
+					for(i=0; i<len; i++){
+						var newq = makeNewPosition();
+						$(".sBlock").eq(i).animate({top: newq[0], left: newq[1]},1000);	
+					}
 				}
 
-				$(".sCenter").animate({ top: 0},1000);
+//				$(".sCenter").animate({ top: 0},1000);
 
 			});
 //	click and enlarge
@@ -195,9 +209,11 @@
 			sMove("#tMath", ".mIndexR", ".mIndexL", cM, "m");
 			sMove("#tPhilosophy", ".pIndexR", ".pIndexL", cP, "p");
 			sMove("#tBuilding", ".bIndexR", ".bIndexL", cB, "b");
+			sMove("#tNetwork", ".nIndexR", ".nIndexL", cN, "n");
+			sMove("#tApp", ".aIndexR", ".aIndexL", cA, "a");
 
 			sRelate(".dT", "#tText", "#tData", "#rDT", ".dtIndexR", ".dtIndexL", cDT, "dt","#xDT");
-			sRelate(".tB", "#tData", "#tText", "#rDT", ".dtIndexR", ".dtIndexL", cDT, "dt","#xDT");
+			sRelate(".tD", "#tData", "#tText", "#rDT", ".dtIndexR", ".dtIndexL", cDT, "dt","#xDT");
 
 			sRelate(".mB", "#tBuilding", "#tMath", "#rMB", ".mbIndexR", ".mbIndexL", cMB, "mb","#xMB");
 			sRelate(".bM", "#tMath", "#tBuilding", "#rMB", ".mbIndexR", ".mbIndexL", cMB, "mb","#xMB");
@@ -232,6 +248,18 @@
 			sRelate(".bN", "#tNetwork", "#tBuilding", "#rBN", ".bnIndexR", ".bnIndexL", cBN, "bn","#xBN");
 			sRelate(".nB", "#tBuilding", "#tNetwork", "#rBN", ".bnIndexR", ".bnIndexL", cBN, "bn","#xBN");
 
+			sRelate(".nA", "#tApp", "#tNetwork", "#rNA", ".naIndexR", ".naIndexL", cNA, "na","#xNA");
+			sRelate(".aN", "#tNetwork", "#tApp", "#rNA", ".naIndexR", ".naIndexL", cNA, "na","#xNA");
+
+			sRelate(".aI", "#tImage", "#tApp", "#rAI", ".aiIndexR", ".aiIndexL", cAI, "ai","#xAI");
+			sRelate(".iA", "#tApp", "#tImage", "#rAI", ".aiIndexR", ".aiIndexL", cAI, "ai","#xAI");
+
+			sRelate(".iD", "#tData", "#tImage", "#rID", ".idIndexR", ".idIndexL", cID, "id","#xID");
+			sRelate(".dI", "#tImage", "#tData", "#rID", ".idIndexR", ".idIndexL", cID, "id","#xID");
+
+			sRelate(".iT", "#tText", "#tImage", "#rIT", ".itIndexR", ".itIndexL", cIT, "it","#xIT");
+			sRelate(".tI", "#tImage", "#tText", "#rIT", ".itIndexR", ".itIndexL", cIT, "it","#xIT");
+
 
 
 
@@ -242,8 +270,7 @@ function sRelate(tag,a,b,m,r,l,c,t,x){
 		if($(m).css("display")=="none"){
 			$(m).prepend($(x));
 			$(m).show();
-//			sMove(m, r, l, v, c, t);	
-		
+//			sMove(m, r, l, v, c, t);		
 		}	
 		var sCount=0;
 		$("#sContainer").empty();
